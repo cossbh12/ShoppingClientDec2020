@@ -1,0 +1,23 @@
+<h4>Place an Order (Web Sockets)</h4>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-group">
+    <label for="for">
+      For
+    </label>
+    <input class="form-control" formControlName="for">
+  </div>
+  <div class="form-group">
+    <label for="items">Items</label>
+    <input class="form-control" formControlName="items">
+  </div>
+  <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Submit</button>
+  </form>
+<h4>Your Orders</h4>
+<div class="alert" [ngClass]="{'alert-info': order.status !== 'Approved', 'alert-success': order.status === 'Approved'}" *ngFor="let order of orders$ | async">
+  <p>Order Id: {{ order.id }}</p>
+  <p>For: {{ order.for }}</p>
+  <p>Items: {{ order.items }}</p>
+  <p>Status: {{ order.status }}</p>
+  <p *ngIf="order.pickupDate">Pickup: {{ order.pickupDate | date }} at {{ order.pickupDate | date:'shortTime' }}</p>
+  <p *ngIf="order.message">Message: {{ order.message }}</p>
+</div>
